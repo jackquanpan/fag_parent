@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据展示</title>
+    <!--<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="/static/js/dataTable/jquery.dataTables.min.css">
+    <script type="text/javascript" src="/static/js/dataTable/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/dataTable/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<a href="/static/pages/Insert.html">添加常见问题</a>
+<center>
+
+    <table width="100%" border="1px" cellspacing="0px" cellpadding="0px"
+           class="tablelist" id="example" bgcolor="aqua">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>标题</th>
+            <th>分类</th>
+            <th>创建时间</th>
+        </tr>
+        </thead>
+        <tbody id="tb">
+
+        </tbody>
+    </table>
+    <script type="text/javascript">
+
+       $(function () {
+           $.ajax({
+               url:'/findclss.do',
+               type:'post',
+               dataType:'json',
+               async:false,//关闭异步
+               success:function (rs) {
+                   var content="";
+                   for(i in rs){
+                       var time=rs[i].createDate;
+                       var newtime=time;
+                       var times=new Date(newtime);
+                       var times= times.toLocaleString();
+
+                       content+=" <tr>\n" +
+                           "            <td align='center'>"+rs[i].id+"</td>\n" +
+                           "            <td align='center'><a href='/static/pages/ShowClass.html?id="+rs[i].id+"'>"+rs[i].title+"</a></td>\n" +
+                           "            <td align='center'>"+rs[i].cname+"</td>\n" +
+                           "            <td align='center'>"+times+"</td>\n" +
+                           "        </tr>"
+                   }
+                   $("#tb").append(content);
+                   $("#tb tr:odd").css("background","#FFAA00")
+               }
+           })
+       })
+       $(function(){
+           $("#example").dataTable({
+               "bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示
+               "aLengthMenu" : [1, 10, 15], //更改显示记录数选项
+               "sPaginationType" : "full_numbers", //详细分页组，可以支持直接跳转到某页
+               "bAutoWidth" : true, //是否自适应宽度
+               //"bJQueryUI" : true,
+               "oLanguage": { //国际化配置
+                   "sProcessing" : "正在获取数据，请稍后...",
+                   "sLengthMenu" : "显示 _MENU_ 条",
+                   "sZeroRecords" : "没有您要搜索的内容",
+                   "sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
+                   "sInfoEmpty" : "记录数为0",
+                   "sInfoFiltered" : "(全部记录数 _MAX_ 条)",
+                   "sInfoPostFix" : "",
+                   "sSearch" : "搜索",
+                   "sUrl" : "",
+                   "oPaginate": {
+                       "sFirst" : "第一页",
+                       "sPrevious" : "上一页",
+                       "sNext" : "下一页",
+                       "sLast" : "最后一页"
+                   }
+               },
+           });
+       });
+        
+    </script>
+</center>
+</body>
+</html>

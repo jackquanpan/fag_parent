@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="fa_consumer" />
+        <module name="fa_interface" />
+        <module name="fa_pojo" />
+        <module name="fa_provider2" />
+        <module name="fs_provider1" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

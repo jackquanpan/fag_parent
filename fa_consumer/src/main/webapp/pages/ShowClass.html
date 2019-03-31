@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js">-->
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="/static/js/dataTable/jquery.dataTables.min.css">
+    <script type="text/javascript" src="/static/js/dataTable/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/dataTable/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<center>
+
+    <table width="100%" border="1px" cellspacing="0px" cellpadding="0px">
+      <tbody id="tb">
+      </tbody>
+    </table>
+</center>
+<script type="text/javascript">
+    var urllinfo=window.location.href;//获取当前地址
+    var len=urllinfo.length;//获取地址场地
+    var offset=urllinfo.indexOf("?");//获取问号序号
+    var newssidinfo=urllinfo.substr(offset,len); //id=1获取到
+    var newsside=newssidinfo.split("=");//分割得到数组以等号分割
+    var s=newsside[1];//得到参数
+  $(function () {
+      $.ajax({
+          url:'/findclss.do',
+          type:'post',
+          dataType:'json',
+          data:{
+              "id":s,
+          },
+          success:function (rs) {
+              var contant="";
+              var time=rs[0].createDate;
+              var newtime=time;
+              var times=new Date(newtime);
+              var times= times.toLocaleString();
+              contant+="<tr>\n" +
+                  "          <td>标题</td>\n" +
+                  "          <td>"+rs[0].title+"</td>\n" +
+                  "      </tr>\n" +
+                  "      <tr>\n" +
+                  "          <td>创建时间</td>\n" +
+                  "          <td>"+times+"</td>\n" +
+                  "      </tr>\n" +
+                  "      <tr>\n" +
+                  "          <td>类别</td>\n" +
+                  "          <td>"+rs[0].cname+"</td>\n" +
+                  "      </tr>\n" +
+                  "      <tr>\n" +
+                  "          <td>描述</td>\n" +
+                  "          <td>"+rs[0].content+"</td>\n" +
+                  "      </tr>"
+              $("#tb").append(contant)
+          }
+
+      })
+  })
+</script>
+</body>
+</html>
